@@ -12,11 +12,15 @@ AWS_USE_FIPS_ENDPOINT=false
 # ------------------------------
 # Defined Whitelist (check_id → reason)
 # ------------------------------
-declare -A WHITELIST
-WHITELIST["R365s2Qddf"]="V4G only enable S3 Bucket Versioning for customer data. the remaining S3 buckets are deployment/log buckets and has limited access from AWS service only. "
-WHITELIST["c18d2gz119"]="V4G only enable S3 Bucket Replication for customer data. The remaining S3 buckets are deployment/log buckets and do not require cross-region replication."
-WHITELIST["H7IgTzjTYb"]="V4G is serverless architecture. No need EBS Snapshots for fault tolerance"
-WHITELIST["wuy7G1zxql"]="V4G workload is stateless and instances can be recreated rapidly if needed. Multi-AZ balancing is not required"
+get_whitelist_reason() {
+  case "$1" in
+    "R365s2Qddf") echo "V4G only enable S3 Bucket Versioning for customer data. the remaining S3 buckets are deployment/log buckets and has limited access from AWS service only. " ;;
+    "c18d2gz119") echo "V4G only enable S3 Bucket Replication for customer data. The remaining S3 buckets are deployment/log buckets and do not require cross-region replication." ;;
+    "H7IgTzjTYb") echo "V4G is serverless architecture. No need EBS Snapshots for fault tolerance" ;;
+    "wuy7G1zxql") echo "V4G workload is stateless and instances can be recreated rapidly if needed. Multi-AZ balancing is not required" ;;
+    *) echo "" ;;
+  esac
+}
 
 echo "Trusted Advisor - Fault Tolerance Checks Summary" > "$OUTPUT_FILE"
 echo "Date: $(date -u)" >> "$OUTPUT_FILE"
@@ -44,10 +48,11 @@ while read -r check; do
   echo "Status: $status" >> "$OUTPUT_FILE"
 
   if [[ "$status" == "error" || "$status" == "warning" ]]; then
-    if [[ -n "${WHITELIST[$check_id]}" ]]; then
+    reason=$(get_whitelist_reason "$check_id")
+    if [[ -n "$reason" ]]; then
       whitelist_count=$((whitelist_count + 1))
       echo "Whitelist: YES" >> "$OUTPUT_FILE"
-      echo "Whitelist Reason: ${WHITELIST[$check_id]}" >> "$OUTPUT_FILE"
+      echo "Whitelist Reason: $reason" >> "$OUTPUT_FILE"
     else
       issue_count=$((issue_count + 1))
     fi

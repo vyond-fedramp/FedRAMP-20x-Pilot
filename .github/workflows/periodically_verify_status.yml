@@ -8,37 +8,37 @@ permissions:
 on:
   schedule:
     # runs at 00:00 every day
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
   workflow_dispatch:
     inputs:
       fedramp20x-host:
-        description: 'fedramp20x FQDN'
+        description: "fedramp20x FQDN"
         required: false
         type: choice
         options:
           - https://status.staging.vyond-fedramp.org
           - https://status.vyond-fedramp.com
       fedramp20x-s3-bucket:
-        description: 'fedramp20x S3 bucket'
+        description: "fedramp20x S3 bucket"
         required: false
         type: choice
         options:
           - vf-staging-fedramp20x-us-east-1
           - vf-production-fedramp20x-us-east-1
       fedramp20x-s3-prefix:
-        description: 'fedramp20x S3 phaseone prefix'
+        description: "fedramp20x S3 phaseone prefix"
         required: false
         type: choice
         options:
           - "phase-one"
       fedramp20x-evidence-s3-prefix:
-        description: 'fedramp20x S3 evidence prefix'
+        description: "fedramp20x S3 evidence prefix"
         required: false
         type: choice
         options:
           - "evidence"
       fedramp20x-attestation-s3-prefix:
-        description: 'fedramp20x S3 attestation prefix'
+        description: "fedramp20x S3 attestation prefix"
         required: false
         type: choice
         options:
@@ -79,10 +79,10 @@ jobs:
           fi
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Assume GitHub OIDC AWS role
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ env.ROLE_TO_ASSUME }}
@@ -91,9 +91,9 @@ jobs:
         run: aws sts get-caller-identity
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.10'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |

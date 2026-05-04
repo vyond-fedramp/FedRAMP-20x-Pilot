@@ -304,7 +304,7 @@
                      "link": "https://drive.google.com/file/d/1TQJ7bvoU_5BlEJmdHPTaM8F2ciDn9hyq/view?usp=drive_link"
                   }
                ],
-               "note": "V4G hosts on AWS and adopts Google Workspace to be the document repository, the automation management is inherited from the security control of each side. Moreover, V4G has adopted Sumo Logic (FR#: <a href='https://marketplace.fedramp.gov/products/FR1918740338' target='_blank'>FR1918740338</a>) and AWS CloudWatch to detect the abnormal account behaviors"
+               "note": "V4G hosts on AWS and adopts Google Workspace to be the document repository, the automation management is inherited from the security control of each side. Moreover, V4G has adopted Wazuh and AWS CloudWatch to detect the abnormal account behaviors"
             }
          }
       },
@@ -321,7 +321,7 @@
                      "link": "https://drive.google.com/file/d/1CTcmyYtie7JTbj1R7IuUJyfkdxE7vZ5H/view?usp=drive_link"
                   }
                ],
-               "note": "V4G adopts Sumo Logic (FR#: <a href='https://marketplace.fedramp.gov/products/FR1918740338' target='_blank'>FR1918740338</a>) as the SIEM"
+               "note": "V4G adopts Wazuh as the SIEM, collecting data from Google Workspace and AWS to detect abnormal activities"
             },
             "02": {
                "desc": "Regularly review and audit logs",
@@ -332,7 +332,7 @@
                      "link": "https://drive.google.com/file/d/12Emr2nJotl2d-pwoLChfVz8v-xtJMNoL/view?usp=drive_link"
                   }
                ],
-               "note": "Sumo Logic helps to review and analyze the log immediately and V4G runs the investigation for the suspicious behaviors when they occur"
+               "note": "Wazuh helps to review and analyze the log immediately and V4G runs the investigation for the suspicious behaviors when they occur"
             },
             "03": {
                "desc": "Rapidly detect and remediate or mitigate vulnerabilities",
